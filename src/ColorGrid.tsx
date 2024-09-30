@@ -1,8 +1,7 @@
 import type React from 'react';
-import { useEffect, useState } from 'react';
 import styles from './ColorGrid.module.css';
+import colorData from './colors.json';
 
-// interfaces
 interface ComplementaryColor {
     hex: string;
     name: string;
@@ -15,27 +14,15 @@ interface Color {
 }
 
 const ColorGrid: React.FC = () => {
-    const [colors, setColors] = useState<Color[]>([]);
-
-    useEffect(() => {
-        fetch('/colors.json')
-            .then((response) => response.json())
-            .then((data: Color[]) => {
-                setColors(data);
-            })
-            .catch((error) => {
-                console.error('Error fetching colors:', error);
-            });
-    }, []);
-
+    const colors: Color[] = colorData;
+    //using file directly since Github pages doesn't allow fetch from inside
+    //won't make a difference for now since we have a graceful fail state - no render of grid is all
     return (
         <div className={styles.grid}>
-            {colors.map((color) => (
-                <div
-                    key={color.hex}
-                    className={styles.gridItem}
-                    style={{ backgroundColor: `#${color.hex}` }}
-                >
+            {/*iterate over the colors json file*/}
+            {colors.map(color => (
+                // generate a color display rectangle
+                <div key={color.hex} className={styles.gridItem} style={{ backgroundColor: `#${color.hex}` }}>
                     <span className={styles.colorName}>{color.name}</span>
                 </div>
             ))}

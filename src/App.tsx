@@ -1,4 +1,4 @@
-import ColorGrid from "./ColorGrid.tsx";
+import ColorGrid from './ColorGrid.tsx';
 
 const App = () => {
     return (
